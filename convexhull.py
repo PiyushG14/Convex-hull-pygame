@@ -35,9 +35,25 @@ def main():
     leftmost_point = [t for t in coords if leftmost_x is t[0]][0]
     pygame.draw.circle(win, hull_color, leftmost_point, 4)
     pygame.display.update()
-    
-    
     current_point = leftmost_point
+    
+    
+    while(True):
+        hull.append(current_point)
+        next_point = coords[(coords.index(current_point) + 1)%n]
+        for check_point in coords:
+            if(direction(current_point, next_point, check_point)):
+                #print(check_point)
+                next_point = check_point
+                
+        pygame.draw.line(win, line_color, current_point,next_point, 4)
+        pygame.display.update()
+        current_point = next_point  
+        
+        if(current_point == hull[0]):
+            break
+        
+    
     
     while True: 
         for event in pygame.event.get():
